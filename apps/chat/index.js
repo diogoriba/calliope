@@ -7,7 +7,7 @@ var init = function (params) {
 	params['socket.io'] = socketio;
 
 	// Load modules
-	exports.auth = require('./auth.js')(params);
+	//exports.auth = require('./auth.js')(params);
 	exports.handshake = require('./handshake.js')(params);
 };
 

@@ -1,6 +1,7 @@
 var auth = function (params) {
 	// Parse args
-	var app = params['express'];
+	var app = params['express'],
+		sessionStore = params['sessionStore'];
 
 	// Require
 	var graph = require('fbgraph');
@@ -31,6 +32,10 @@ var auth = function (params) {
 				// access_token (string), expires (string)
 				// we probably want to store this in the user session so we can retrieve it via socketio later
 				console.log(facebookRes);
+				console.log(JSON.stringify(req.session));
+				req.session.fbToken = facebookRes.access_token;
+				console.log(JSON.stringify(req.session));
+				console.log("saving session");
 				res.redirect('/auth/loggedIn');
 			});
 		}
@@ -38,7 +43,10 @@ var auth = function (params) {
 
 	app.get('/auth/loggedIn', function (req, res) {
 		res.writeHead(200);
-		res.write("TADAAAAA");
+		console.log("trying to read this shit: " + JSON.stringify(req.session))
+		console.log("my session id: " + req.sessionID);
+		console.log("whats in the store: " + JSON.stringify(sessionStore));
+		res.write("TADAAAAA " + req.session.fbToken);
 		res.end();
 	});
 };

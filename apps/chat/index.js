@@ -4,10 +4,9 @@ var init = function (params) {
 
 	// Require
 	var socketio = require('socket.io').listen(server);
-	params['socket.io'] = socketio;
+	params['io'] = socketio;
 
 	// Load modules
-	//exports.auth = require('./auth.js')(params);
 	exports.handshake = require('./handshake.js')(params);
 };
 

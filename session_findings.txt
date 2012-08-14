@@ -1,0 +1,19 @@
+Turns out the sessionID that you get from the cookie while authorizing a socket is slightly different than the one you get from request.sessionID.
+
+Example: if your request.sessionID is +PtdkFnzth1QxpYdz3mTiOvl, it would be somthing like this in the cookie:
+s:+PtdkFnzth1QxpYdz3mTiOvl.iuVorv14NNbhsXTE32yTp7TB3B1jICFcv8kxS8xl/FE
+
+I still haven't figured out why, but it looks like the sessionID can be captured with /^s:(?<sessionID>[^\.])+\./.
+
+Below, some logs that prove my point:
+
+Got connection request from [127.0.0.1]
+The sessionID is = s:+PtdkFnzth1QxpYdz3mTiOvl.iuVorv14NNbhsXTE32yTp7TB3B1jICFcv8kxS8xl/FE
+info  - transport end (socket end)
+debug - set close timeout for client 9rUhLKydBanz2gm2-AYI
+debug - cleared close timeout for client 9rUhLKydBanz2gm2-AYI
+debug - cleared heartbeat interval for client 9rUhLKydBanz2gm2-AYI
+debug - discarding transport
+trying to read this shit: {"cookie":{"originalMaxAge":null,"expires":null,"httpOnly":true,"path":"/"},"fbToken":"AAACOxQzZCGLABAHbuCii6jWfju4dku9ik9qMDNo5WWWdFc8Nu0NWdUDoUP8GHOfN4MzX8RnS7lRg0qCiEZCKpbDPyn1c3Qotj0rhE2eQZDZD"}
+my session id: +PtdkFnzth1QxpYdz3mTiOvl
+whats in the store: {"sessions":{"+PtdkFnzth1QxpYdz3mTiOvl":"{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"fbToken\":\"AAACOxQzZCGLABAHbuCii6jWfju4dku9ik9qMDNo5WWWdFc8Nu0NWdUDoUP8GHOfN4MzX8RnS7lRg0qCiEZCKpbDPyn1c3Qotj0rhE2eQZDZD\"}"}}

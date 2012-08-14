@@ -1,7 +1,7 @@
 var init = function (params) {
 	// Load modules
-	exports.chat = require('./chat')(params);
-	exports.auth = require('./auth')(params);
+	require('./chat')(params);
+	require('./auth')(params);
 };
 
 module.exports = init;

@@ -7,7 +7,7 @@ var init = function (params) {
 	params['io'] = socketio;
 
 	// Load modules
-	exports.handshake = require('./handshake.js')(params);
+	require('./handshake.js')(params);
 };
 
 module.exports = init;

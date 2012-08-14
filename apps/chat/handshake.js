@@ -19,15 +19,17 @@ var handshake = function (params) {
 		}
 
 		data.cookie = parseCookie(data.headers.cookie);
+		console.log(JSON.stringify(data.headers.cookie));
 		data.sessionID = data.cookie['express.sid'];
 		data.sessionStore = sessionStore;
-		sessionStore.get(data.sessionID, function (err, session) {
-			if (err || !session) {
-				return accept('no session', false);
-			}
-			data.session = session;
-			accept(null, true);
-		});
+		accept(null, true);
+		// sessionStore.get(data.sessionID, function (err, session) {
+		// 	if (err || !session) {
+		// 		return accept('no session', false);
+		// 	}
+		// 	data.session = session;
+		// 	accept(null, true);
+		// });
 	});
 };
 

@@ -15,16 +15,24 @@ app.configure('development', function () {
 	app.use(express.static(__dirname + '/public'));
 	app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 	app.use(express.cookieParser());
-	sessionStore.clear();
 	app.use(express.session({
 		secret: 'secret', 
 		key: 'express.sid',
-		store: sessionStore,
-		cookie: { maxAge: 365*24*60*60*1000, httpOnly: false }
+		store: sessionStore
 	}));
 });
 
-console.log("whats in the store: " + JSON.stringify(sessionStore));
+app.get('/check', function (req, res) {
+	res.write("Check this out: session = " + JSON.stringify(req.session));
+	res.end();
+});
+
+app.get('/set', function (req, res) {
+	req.session.value = "once i farted so loud i shat myself";
+	res.redirect("/check");
+});
+
+//require('./apps/auth')({express:app, httpServer:server, sessionStore:sessionStore});
 // Load modules
 require('./apps')({ express: app, httpServer: server, sessionStore: sessionStore });
 

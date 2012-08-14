@@ -22,6 +22,7 @@ var auth = function (params) {
 				res.end();
 			}
 		} else { // code available, let's get access token
+			var session = req.session;
 			graph.authorize({
 				client_id: config.client_id,
 				client_secret: config.client_secret,
@@ -31,11 +32,7 @@ var auth = function (params) {
 				// facebookRes is a json object with the following properties:
 				// access_token (string), expires (string)
 				// we probably want to store this in the user session so we can retrieve it via socketio later
-				console.log(facebookRes);
-				console.log(JSON.stringify(req.session));
-				req.session.fbToken = facebookRes.access_token;
-				console.log(JSON.stringify(req.session));
-				console.log("saving session");
+				session.fbToken = facebookRes.access_token;
 				res.redirect('/auth/loggedIn');
 			});
 		}
